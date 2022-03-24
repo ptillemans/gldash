@@ -1,0 +1,35 @@
+query PipelinesQuery($group: ID!) {
+  group(fullPath: $group) {
+    id
+    projects {
+      nodes {
+        id
+        name
+        pipelines(first: 1) {
+          nodes {
+            id
+            finishedAt
+            detailedStatus {
+              text
+            }
+            stages(first: 10) {
+              nodes {
+                name
+                detailedStatus {
+                  detailsPath
+                  favicon
+                  group
+                  hasDetails
+                  icon
+                  label
+                  text
+                  tooltip
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

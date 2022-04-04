@@ -13,8 +13,7 @@ struct Command {
 
 fn format_pipeline_results(pipelines: &Vec<Pipeline>) -> String {
     pipelines
-        .into_iter()
-        .next()
+        .get(0)
         .map(|pipeline| pipeline.jobs.clone())
         .map({
             |jobs| {
@@ -50,8 +49,7 @@ fn main() -> Result<(), anyhow::Error> {
     for project in groups.into_iter().flat_map(|g| g.projects) {
         let project_status = project
             .pipelines
-            .iter()
-            .next()
+            .get(0)
             .map(|pl| pl.status.to_string())
             .unwrap_or("???".to_string());
         table.add_row(row!(

@@ -11,7 +11,7 @@ struct Command {
     group: String,
 }
 
-fn format_pipeline_results(pipelines: &Vec<Pipeline>) -> String {
+fn format_pipeline_results(pipelines: &[Pipeline]) -> String {
     pipelines
         .get(0)
         .map(|pipeline| pipeline.jobs.clone())
@@ -23,7 +23,7 @@ fn format_pipeline_results(pipelines: &Vec<Pipeline>) -> String {
                     .join(" > ")
             }
         })
-        .unwrap_or("???".to_string())
+        .unwrap_or_else(|| "???".to_string())
 }
 
 fn main() -> Result<(), anyhow::Error> {
@@ -51,7 +51,7 @@ fn main() -> Result<(), anyhow::Error> {
             .pipelines
             .get(0)
             .map(|pl| pl.status.to_string())
-            .unwrap_or("???".to_string());
+            .unwrap_or_else(|| "???".to_string());
         table.add_row(row!(
             project.name,
             project_status,

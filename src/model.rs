@@ -35,6 +35,7 @@ pub enum Status {
     SKIPPED,
     MANUAL,
     UNKNOWN,
+    CREATED,
 }
 
 impl From<&str> for Status {
@@ -47,6 +48,7 @@ impl From<&str> for Status {
             "blocked" => Status::BLOCKED,
             "skipped" => Status::SKIPPED,
             "manual" => Status::MANUAL,
+            "created" => Status::CREATED,
             _ => {
                 log::error!("Unknown status found : {}", s);
                 Status::UNKNOWN
@@ -65,6 +67,7 @@ impl Display for Status {
             Status::BLOCKED => write!(f, "BLOCKED"),
             Status::SKIPPED => write!(f, "SKIPPED"),
             Status::MANUAL => write!(f, "MANUAL"),
+            Status::CREATED => write!(f, "CREATED"),
             _ => write!(f, "UNKNOWN"),
         }
     }

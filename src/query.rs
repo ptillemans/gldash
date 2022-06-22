@@ -135,7 +135,7 @@ fn create_http_client(config: &Configuration) -> Result<Client> {
 }
 
 fn query_group(client: &reqwest::blocking::Client, group: String) -> Result<Group> {
-    let variables = pipelines_query::Variables { group };
+    let variables = pipelines_query::Variables { group: group.clone() };
     let response = post_graphql::<PipelinesQuery, _>(
         client,
         "https://gitlab.melexis.com/api/graphql",
@@ -145,7 +145,7 @@ fn query_group(client: &reqwest::blocking::Client, group: String) -> Result<Grou
 
     info!("{:?}", response);
 
-    let response_data: pipelines_query::ResponseData = response.data.unwrap();
+    let group = response.data.map(|data| data.group).flatten().expect(&format!("No data for group {}", group));
 
-    response_data.group.map(Group::try_from).unwrap()
+    Group::try_from(group)
 }
